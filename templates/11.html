@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+
+
+
+{% block content %}
+    
+<br><br>
+
+
+
+
+
+
+
+<br><br>
+
+<form method="POST">
+    <button id="movingButton" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" type="submit">button.</button>
+</form>
+<script>
+    const button = document.getElementById('movingButton');
+
+    document.addEventListener('mousemove', (event) => {
+        const cursorX = event.clientX;
+        const cursorY = event.clientY;
+
+        // Get the button's position and dimensions
+        const buttonRect = button.getBoundingClientRect();
+        const buttonX = buttonRect.left + buttonRect.width / 2;
+        const buttonY = buttonRect.top + buttonRect.height / 2;
+
+        // Calculate the distance between the cursor and the button
+        const distance = Math.sqrt(
+            Math.pow(cursorX - buttonX, 2) + Math.pow(cursorY - buttonY, 2)
+        );
+
+        // Adjust movement based on proximity
+        const threshold = 200; // The distance where the button starts moving
+        const maxSpeed = 20; // Maximum speed for the button
+
+        if (distance < threshold) {
+            // Calculate movement speed based on proximity
+            const speed = Math.min(maxSpeed, maxSpeed * (1 - distance / threshold));
+
+            // Calculate movement direction
+            const deltaX = cursorX - buttonX;
+            const deltaY = cursorY - buttonY;
+            const angle = Math.atan2(deltaY, deltaX);
+
+            // Move the button away from the cursor
+            const newX = buttonX - Math.cos(angle) * speed;
+            const newY = buttonY - Math.sin(angle) * speed;
+
+            moveButtonTo(newX, newY);
+        }
+    });
+
+    function moveButtonTo(newX, newY) {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        // Get the button's dimensions
+        const buttonWidth = button.offsetWidth;
+        const buttonHeight = button.offsetHeight;
+
+        // Check for collisions with the viewport edges
+        const isAtEdge =
+            newX <= 0 ||
+            newX + buttonWidth >= viewportWidth ||
+            newY <= 0 ||
+            newY + buttonHeight >= viewportHeight;
+
+        if (isAtEdge) {
+            // Move the button in an arc path toward the center
+            const centerX = viewportWidth / 2;
+            const centerY = viewportHeight / 2;
+
+            const arcAngle = 0.2; // Adjust the arc curvature
+            const deltaX = centerX - newX;
+            const deltaY = centerY - newY;
+            const angle = Math.atan2(deltaY, deltaX) + arcAngle;
+
+            newX += Math.cos(angle) * 20; // Move toward the center along the arc
+            newY += Math.sin(angle) * 20;
+        }
+
+        // Clamp position to ensure it stays within the viewport
+        const clampedX = Math.max(0, Math.min(viewportWidth - buttonWidth, newX));
+        const clampedY = Math.max(0, Math.min(viewportHeight - buttonHeight, newY));
+
+        // Move the button to the new position
+        button.style.left = `${clampedX}px`;
+        button.style.top = `${clampedY}px`;
+    }
+</script>
+
+
+
+
+
+{% endblock %}

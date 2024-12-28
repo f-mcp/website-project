@@ -1,0 +1,68 @@
+NEW MR X IDEAS
+
+I think this next one can be more of a puzzle solving one. Keep it linear (faster to make!) and just have simple but clever puzzles on a page by page basis.
+
+Also impliment:
+If a user hasn't completed a level and decides to type in the url for a future level, they get told off and redirected to the level they were on
+
+Pages:
+
+
+just black screen, with 'f12' in the middle. reveals answer in hidden black text.
+
+something with a noise that you hone in on
+
+/stereogram
+
+/garbled nonsense that you can resize in the x for it to wrap in just a way to reveal key info (qr code?)
+
+If we have puzzle number index down the left or whatever, and that these take you to that question, we could have question eg 47 ask 'What is the meaning of life?' with no form submission. The user needs to click q 42 index to progress to #48
+
+something to do with the tab icon
+
+coords to a street view location with big graffiti letters that reveals answer
+
+/somehow link to the 'tequila' music video about a second before he says tequila
+
+/answer is given but the box moves and you have to corner it (trap it with freehand drawing?)
+
+/blank screen, just form box. only tab title has changed to the answer
+
+/one answer previously is 'yellow', another is 'red'. Say these are questions 2 and 4, q7 might say '2+4'. The answer is not 6, it is 'orange'
+
+join the dots reveals a word
+
+user has to move the curser between two narrow wiggly paths like buzzwire. If they hit a line then they get sent back to prev level
+
+floor with button underneath. Mouse cannot move through floor. User has to pick up a rock and drop it a few times on crack in floor
+
+/infinitely long scrollable page. When the user scrolls it holds scroll speed and they add to it by further scrolling. They have a speedo in the corner and have to reach 88mph to travel back in time to reveal the answer/button (or just nav straight to next page)
+
+/Konami code
+
+jigsaw with one extra piece that you scroll down for
+    This is question 12
+    For the puzzle pieces, I think we should have pngs that match the dimensions of the overall puzzle but are transparent in every section other than
+    their corresponding piece
+    
+
+shake the mouse lots to reveal an answer
+
+zoom out to reveal something (could have fun with this - zoom out of some guys buttcrack? Forcing the level to start at max zoom in might
+    provide a nice clue while also allowing more creative room)
+    Turns out you can't force browser zoom. Might still be possible though somehow?
+
+
+Turn on a light switch that momentarily lights up a room revealing an anwswer written on the wall before bulb pops
+
+/Timer that resets to zero whenever they do anything (count up so they don't know if/when it is going to do something)
+
+/Flipped page. Answer is made up of letters that can also be upside down to 
+    mean something else (like when you flip a calculator upside down and it says boobies)
+    Letters that have upside down optioms:
+    W,E,U,I,O,P,S,D,H,K,L,Z,X,C,V,B,M,q,
+    M,E,n,I,O,b,Z,D,H,K,r,S,X,C,A,B,W,d,
+
+^ Same for rotate?
+
+

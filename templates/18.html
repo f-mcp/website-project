@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br><br><br><br>
+
+<form method="POST">
+    <input type="text" name="answer" placeholder="enter your answer." required>
+    <button type="submit" class="sect18">submit.</button>
+</form>
+
+<div class="sect18">
+<br><br>
+
+what do us british folks call a pound.
+
+<br><br>
+
+hint. it rhymes with bid.
+
+<br><br>
+</div>
+
+
+
+<style>
+.sect18 {
+  transform: scale(1, -1);
+  -moz-transform: scale(1, -1);
+  -webkit-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+</style>
+
+
+{% endblock %}

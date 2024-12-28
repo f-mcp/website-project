@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Timer container styling */
+#timer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Timer text styling */
+#timer {
+  font-size: 5rem;
+  color: #ffffff; /* Bright green text */
+  font-weight: bold;
+  padding: 20px 40px;
+}
+
+</style>
+
+<div id="timer-container">
+    <span id="timer">00</span>
+  </div>
+  
+
+
+<script>
+// Timer variables
+let timer = 0;
+let timerInterval;
+
+// Function to reset the timer
+function resetTimer() {
+  timer = 0;
+  updateTimerDisplay();
+}
+
+// Function to start the timer
+function startTimer() {
+  // Clear any existing interval to prevent duplication
+  clearInterval(timerInterval);
+  
+  // Start a new interval
+  timerInterval = setInterval(() => {
+    timer++;
+    if (timer >= 365) {
+        window.location.href = "17"; // Link to next level when the user waits x seconds
+    }
+    updateTimerDisplay();
+  }, 1000);
+}
+
+// Function to update the timer display
+function updateTimerDisplay() {
+  const timerElement = document.getElementById("timer");
+  timerElement.textContent = timer < 10 ? `0${timer}` : timer;
+}
+
+// Event listeners for user interaction
+function setupInteractionListeners() {
+  const resetEvents = ["mousemove", "keydown", "mousedown", "touchstart", "scroll"];
+  
+  resetEvents.forEach(event => {
+    document.addEventListener(event, resetTimer);
+  });
+}
+
+// Initialize the timer
+function initTimer() {
+  startTimer();
+  setupInteractionListeners();
+}
+
+// Start everything when the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", initTimer);
+</script>
+
+
+
+{% endblock %}

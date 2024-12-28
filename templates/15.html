@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br><br><br><br><br><br><br><br>Konami.
+
+<script>
+    // Define the Konami Code sequence
+const konamiCode = [
+  "ArrowUp", "ArrowUp", 
+  "ArrowDown", "ArrowDown", 
+  "ArrowLeft", "ArrowRight", 
+  "ArrowLeft", "ArrowRight", 
+  "b", "a"
+];
+
+// Array to track the user's input
+let userInput = [];
+
+// Add an event listener for keydown events
+document.addEventListener("keydown", (event) => {
+  // Push the key pressed into the userInput array
+  userInput.push(event.key);
+
+  // Keep only the last few entries equal to the length of the Konami Code
+  if (userInput.length > konamiCode.length) {
+    userInput.shift();
+  }
+
+  // Check if the userInput matches the Konami Code
+  if (JSON.stringify(userInput) === JSON.stringify(konamiCode)) {
+    window.location.href = "16";
+    // Add any additional functionality here
+  }
+});
+
+</script>
+
+
+{% endblock %}

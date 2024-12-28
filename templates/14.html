@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}
+Mouse Maze - Level {{ level }}
+{% endblock %}
+
+{% block content %}
+    <div id="maze-container">
+        <div id="start">Start</div>
+        <div id="finish">Finish</div>
+        <div class="maze-wall"></div>
+        <div class="maze-wall"></div>
+        <div class="maze-wall"></div>
+        <div class="maze-wall"></div>
+        <!-- Add more walls to define your maze -->
+    </div>
+    <div id="status">Move your mouse to navigate from Start to Finish without touching the walls!</div>
+
+    <script>
+        const mazeContainer = document.getElementById("maze-container");
+        const start = document.getElementById("start");
+        const finish = document.getElementById("finish");
+        const status = document.getElementById("status");
+        const walls = document.querySelectorAll(".maze-wall");
+
+        let isInsideMaze = false;
+
+        // Function to restart the maze
+        function restartMaze() {
+            status.textContent = "Oops! You touched a wall. Back to Start!";
+            status.style.color = "red";
+            isInsideMaze = false;
+        }
+
+        // Check if the player reaches the Finish
+        finish.addEventListener("mouseenter", () => {
+            if (isInsideMaze) {
+                status.textContent = "Congratulations! You completed the maze!";
+                status.style.color = "green";
+                isInsideMaze = false;
+            }
+        });
+
+        // Detect when the mouse enters Start
+        start.addEventListener("mouseenter", () => {
+            status.textContent = "Navigate to Finish without touching the walls!";
+            status.style.color = "black";
+            isInsideMaze = true;
+        });
+
+        // Detect if the mouse touches any walls
+        walls.forEach((wall) => {
+            wall.addEventListener("mouseenter", () => {
+                if (isInsideMaze) {
+                    restartMaze();
+                }
+            });
+        });
+    </script>
+
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        #maze-container {
+            position: relative;
+            width: 1200px;
+            height: 500px;
+            margin: 50px auto;
+            background-color: #000000;
+            border: 2px solid #fff;
+            overflow: hidden;
+        }
+
+        #start,
+        #finish {
+            position: absolute;
+            width: 80px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background-color: rgb(93, 93, 93);
+            color: white;
+            border-radius: 8px;
+        }
+
+        #start {
+            top: 10px;
+            left: 10px;
+        }
+
+        #finish {
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .maze-wall {
+            position: absolute;
+            background-color: rgb(255, 255, 255);
+            width: 2px;
+            height: 100px;
+            border-radius: 4px;
+        }
+
+        /* Example wall placement */
+        .maze-wall:nth-child(3) {
+            top: 100px;
+            left: 50px;
+            height: 200px;
+        }
+
+        .maze-wall:nth-child(4) {
+            top: 200px;
+            left: 150px;
+            width: 300px;
+            height: 4px;
+        }
+
+        .maze-wall:nth-child(5) {
+            top: 300px;
+            left: 100px;
+            height: 150px;
+        }
+
+        #status {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}

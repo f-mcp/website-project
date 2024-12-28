@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br><br><br>  <br><br><br>
+
+
+<button id="ASong" onClick="playPause()">
+    <audio
+      src="static/audio.mp3"
+      autoplay
+      loop
+    ></audio>
+    i wonder what this button does.
+  </button>
+  
+  <script>
+    var aud = document.getElementById("ASong").children[0];
+    var isPlaying = false;
+    aud.pause();
+  
+    function playPause() {
+      if (isPlaying) {
+        aud.pause();
+      } else {
+        aud.play();
+      }
+      isPlaying = !isPlaying;
+    }
+  </script>
+  
+
+  <br><br><br>  <br><br><br>
+
+<form method="POST">
+    <input type="text" name="answer" placeholder="enter your answer." required>
+    <button type="submit">submit.</button>
+</form>
+
+
+
+{% endblock %}

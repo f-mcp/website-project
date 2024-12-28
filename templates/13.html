@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="speed-container"></div> <!-- Container for the speed bars -->
+    <canvas id="speedometer" width="200" height="200"></canvas> <!-- Speedometer canvas -->
+
+    <script>
+        const speedContainer = document.getElementById('speed-container');
+        const speedometerCanvas = document.getElementById('speedometer');
+        const ctx = speedometerCanvas.getContext('2d');
+        let speed = 0; // Initial speed
+        let isScrolling = false; // Tracks if the user is actively scrolling
+        let lastScrollTime = Date.now();
+        let eventTriggered = false; // Flag to prevent repeated triggering of the event
+
+        // Create initial bars (simulate road perspective)
+        function createBars() {
+            for (let i = 0; i < 5; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'road-bar';
+                bar.style.top = `${window.innerHeight - i * 500}px`; // Position each bar progressively closer to the top
+                bar.style.left = '50%'; // Center the bars
+                speedContainer.appendChild(bar);
+            }
+        }
+
+        function moveBars() {
+            const bars = document.querySelectorAll('.road-bar');
+            const speedEffect = speed / 5;
+
+            bars.forEach(bar => {
+                let currentTop = parseFloat(bar.style.top || window.innerHeight);
+                currentTop += speedEffect;
+
+                // Reset the bar if it moves out of view
+                if (currentTop > window.innerHeight) {
+                    currentTop = -50; // Reset to above the viewport
+                }
+
+                // Update bar position
+                bar.style.top = `${currentTop}px`;
+            });
+        }
+
+        // Draw the speedometer
+        function drawSpeedometer() {
+            const maxSpeed = 100; // Maximum speed
+            const angleRange = Math.PI; // Semi-circle (180 degrees)
+            const centerX = speedometerCanvas.width / 2;
+            const centerY = speedometerCanvas.height / 2;
+            const radius = 80;
+
+            ctx.clearRect(0, 0, speedometerCanvas.width, speedometerCanvas.height);
+
+            // Draw outer circle
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = '#000';
+            ctx.fill();
+
+            // Draw ticks
+            for (let i = 0; i <= maxSpeed; i += 10) {
+                const angle = Math.PI + (i / maxSpeed) * angleRange;
+                const tickX = centerX + radius * Math.cos(angle);
+                const tickY = centerY + radius * Math.sin(angle);
+                const innerTickX = centerX + (radius - 10) * Math.cos(angle);
+                const innerTickY = centerY + (radius - 10) * Math.sin(angle);
+
+                ctx.beginPath();
+                ctx.moveTo(innerTickX, innerTickY);
+                ctx.lineTo(tickX, tickY);
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            // Draw needle
+            const needleAngle = Math.PI + ((speed * 0.2) / maxSpeed) * angleRange;
+            const needleX = centerX + (radius - 20) * Math.cos(needleAngle);
+            const needleY = centerY + (radius - 20) * Math.sin(needleAngle);
+
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(needleX, needleY);
+            ctx.strokeStyle = '#ff0000';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            // Draw center point
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = '#ff0000';
+            ctx.fill();
+
+            // Draw speed text
+            ctx.font = '20px times';
+            ctx.fillStyle = '#fff';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${Math.round(speed * 0.2)} mph`, centerX, centerY + 40);
+        }
+
+        // Handle user scroll input
+        window.addEventListener('wheel', (event) => {
+            event.preventDefault(); // Prevent default scroll behavior
+
+            const deltaY = event.deltaY;
+
+            if (deltaY < 0) {
+                // Increase speed gradually when scrolling up
+                speed += 0.3; // Gradual speed increase on scroll up
+            } else {
+                // Decelerate faster when scrolling down
+                speed -= 0.5; // Fast deceleration on scroll down
+                if (speed < 0) speed = 0; // Prevent negative speed
+            }
+
+            isScrolling = true;
+            lastScrollTime = Date.now();
+        });
+
+        // Ensure the speed holds when no scrolling is happening
+        function holdSpeed() {
+            if (!isScrolling && speed > 0) {
+                speed *= 0.9999; // Slight natural deceleration
+            }
+            isScrolling = false; // Reset the scrolling flag
+        }
+
+        // Function to display red lines
+        function displayRedLines() {
+            const leftLine = document.createElement('div');
+            const rightLine = document.createElement('div');
+
+            leftLine.className = 'red-line';
+            rightLine.className = 'red-line';
+
+            leftLine.style.left = '48%'; // Position the left line
+            rightLine.style.left = '52%'; // Position the right line
+
+            speedContainer.appendChild(leftLine);
+            speedContainer.appendChild(rightLine);
+
+            // Redirect after 1 second
+            setTimeout(() => {
+                window.location.href = '/14'; // Replace '/new-page' with the URL of the new page
+            }, 1000);
+        }
+
+        // Main loop to animate the bars and speedometer
+        function animate() {
+            moveBars();
+            holdSpeed();
+            drawSpeedometer();
+
+            // Trigger the event when speed reaches 88 mph
+            if (speed * 0.2 >= 88 && !eventTriggered) {
+                eventTriggered = true; // Set the flag
+                displayRedLines();
+            }
+
+            requestAnimationFrame(animate); // Keep the animation loop going
+        }
+
+        // Initialize the page and start the animation
+        createBars();
+        animate();
+    </script>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevent native scrolling */
+            background-color: #000000; /* Black background */
+        }
+
+        #speed-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Prevent interaction with the bars */
+        }
+
+        .road-bar {
+            position: absolute;
+            width: 4px; /* Base width of the bar */
+            height: 50px; /* Base height of the bar */
+            background-color: white;
+            opacity: 0.6;
+        }
+
+        #speedometer {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            border-radius: 50%;
+            background-color: #000000;
+        }
+
+        .red-line {
+            position: absolute;
+            top: 0;
+            width: 2px; /* Thickness of the red line */
+            height: 100%; /* Full height */
+            background-color: rgb(255, 60, 0);
+            z-index: 2; /* Ensure it appears above the bars */
+        }
+    </style>
+{% endblock %}

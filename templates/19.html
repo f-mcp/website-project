@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    /* Canvas container */
+#canvas-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Dot styling */
+.dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+</style>
+
+<div id="canvas-container">
+    <canvas id="canvas"></canvas>
+  </div>
+
+<script>
+    // Select the canvas and set its size
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth-30;
+canvas.height = window.innerHeight;
+
+// Store the last clicked dot position
+let lastClickedDot = null;
+
+// Predefined dot coordinates
+const dotCoordinates = [
+  { x: 50, y: 150 },
+  { x: 300, y: 200 },
+  { x: 500, y: 100 },       // Draw something to give an answer
+  { x: 700, y: 300 },
+  { x: 400, y: 400 },
+  { x: 100, y: 150 },
+  { x: 300, y: 200 },
+  { x: 500, y: 100 },
+  { x: 700, y: 300 },
+  { x: 900, y: 900 },
+];
+
+// Function to create dots at specified coordinates
+function createDots() {
+  dotCoordinates.forEach(({ x, y }) => {
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+    dot.style.left = `${x}px`;
+    dot.style.top = `${y}px`;
+
+    // Add click event listener to the dot
+    dot.addEventListener("click", () => handleDotClick(x, y));
+
+    document.body.appendChild(dot);
+  });
+}
+
+// Function to handle dot clicks and draw lines
+function handleDotClick(x, y) {
+  if (lastClickedDot) {
+    // Draw a line between the last clicked dot and the current one
+    drawLine(lastClickedDot.x, lastClickedDot.y, x, y);
+  }
+
+  // Update the last clicked dot
+  lastClickedDot = { x, y };
+}
+
+// Function to draw a line on the canvas
+function drawLine(x1, y1, x2, y2) {
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.strokeStyle = "#fff";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+// Initialize the dots
+createDots();
+
+</script>
+
+
+{% endblock %}

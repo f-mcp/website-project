@@ -1,0 +1,221 @@
+/* CSS style sheet for new game */
+
+body {
+    background-color: #000000;
+    color: #fff;
+    text-align: center;
+    font-family: times;
+    scrollbar-width: none !important; /* Firefox */
+    
+
+}
+
+.four::-webkit-scrollbar {
+  display: none;
+}
+
+.camo {
+    color:#000000;
+}
+
+
+ /* The sidebar menu */
+ .sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 30px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #000000; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 4px 4px 4px 10px;
+    text-decoration: none;
+    font-family: arial;
+    font-size: 16px;
+    color: #2f2f2f;
+    display: block;
+    text-align: left;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  /* Style page content */
+  .main {
+    margin-left: 160px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  } 
+
+
+form input, form button, button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #000000;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: times;
+}
+
+#mydiv {
+    position: absolute;
+    z-index: 9;
+    background-color: #000000;
+    border: 1px solid #000000;
+    text-align: center;
+    width: 45px;
+    height: 30px;
+    top: 400px;
+    left: 170px; /* This needs to improve by getting the button position and matching it, rather than being hard coded.*/
+  }
+  
+  #mydivheader {
+    padding: 10px;
+    cursor: move;
+    z-index: 10;
+    background-color: #000000;
+  }
+
+.nine {
+  line-height: 10px;
+  font-size: 20px;
+  font-family: courier;
+}
+
+.ten {
+  top: 400px;
+  left: 170px;
+  position:absolute;
+  height: 19px;
+  width: 32px;
+  font-size: xx-small;
+  padding: 1px;
+}
+
+/* -- number 12 -- */
+
+    /* General Styles */
+    #puzzle-container, #drop-container {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 10px;
+      margin: 20px auto;
+      justify-content: center;
+  }
+  
+  .puzzle-piece, .drop-zone {
+      width: 100px;
+      height: 100px;
+      background-color: black;
+      border:#fff;
+  }
+  
+  .puzzle-piece {
+      cursor: grab;
+      position: relative;
+      border:#fff;
+      box-shadow: 0 0 0 3px white;
+  }
+  
+  .drop-zone {
+      border: 2px dashed #fff;
+  }
+
+  /* Puzzle Piece Shapes */
+  .piece-1 {
+      clip-path: polygon(0% 0%, 80% 0%, 80% 20%, 90% 25%, 80% 30%, 80% 80%, 100% 80%, 100% 100%, 0% 100%);
+      box-shadow: 0 0 0 3px white;
+  }
+
+  .piece-2 {
+      clip-path: polygon(20% 0%, 80% 0%, 80% 20%, 90% 25%, 80% 30%, 80% 100%, 20% 100%, 20% 80%, 10% 75%, 20% 70%, 20% 20%);
+  }
+
+  .piece-3 {
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 80% 100%, 80% 80%, 70% 75%, 80% 70%, 80% 20%, 70% 25%, 80% 30%, 80% 0%);
+  }
+
+  .piece-4 {
+      clip-path: polygon(0% 0%, 20% 0%, 20% 20%, 10% 25%, 20% 30%, 20% 80%, 0% 80%, 0% 100%, 100% 100%, 100% 80%, 80% 80%, 80% 30%, 90% 25%, 80% 20%, 80% 0%);
+  }
+
+  .piece-5 {
+      clip-path: polygon(20% 0%, 80% 0%, 80% 20%, 90% 25%, 80% 30%, 80% 70%, 90% 75%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 10% 75%, 20% 70%, 20% 30%, 10% 25%, 20% 20%);
+  }
+
+  .piece-6 {
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 80% 100%, 80% 80%, 70% 75%, 80% 70%, 80% 30%, 90% 25%, 80% 20%, 80% 0%);
+  }
+
+  .piece-7 {
+      clip-path: polygon(0% 0%, 20% 0%, 20% 20%, 10% 25%, 20% 30%, 20% 100%, 100% 100%, 100% 80%, 80% 80%, 80% 30%, 90% 25%, 80% 20%, 80% 0%);
+  }
+
+  .piece-8 {
+      clip-path: polygon(20% 0%, 80% 0%, 80% 100%, 20% 100%, 20% 80%, 10% 75%, 20% 70%, 20% 30%, 10% 25%, 20% 20%);
+  }
+
+  .piece-9 {
+      clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0% 80%);
+  }
+
+
+/* ---------- number 13 ---------- */
+
+body {
+  margin: 0;
+  background-color: #000;
+  color: #fff;
+}
+
+#fixed-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  text-align: center;
+}
+
+#speedometer {
+  font-size: 24px;
+  color: lime;
+}
+
+#fixed-marker {
+  margin-top: 10px;
+  font-size: 18px;
+  color: yellow;
+}
+
+#scrolling-container {
+  padding-top: 100px; /* Leave space for fixed elements */
+}
+
+.scroll-item {
+  height: 200px;
+  margin: 10px 0;
+  background-color: #222;
+  border: 1px solid #444;
+  text-align: center;
+  line-height: 200px;
+  font-size: 24px;
+  color: #ddd;
+}
