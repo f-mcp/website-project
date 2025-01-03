@@ -33,6 +33,17 @@ def level(level):
     if level not in answer_store:
         return render_template('error.html', message="this level does not exist.")
 
+    # Determine the latest unlocked level
+    completed_levels = [lvl for lvl, data in answer_store.items() if data[1] == 1]
+    first_incomplete = next((lvl for lvl, data in answer_store.items() if data[1] == 0), None)
+
+    # The latest unlocked level is either the highest completed level or the first incomplete level
+    latest_unlocked = max(completed_levels) if first_incomplete is None else first_incomplete
+
+    # If the user tries to access a locked level, redirect them to the latest unlocked level
+    if level > latest_unlocked:
+        return redirect(url_for('level', level=latest_unlocked))
+
     # Process form submission
     if request.method == 'POST':
         user_answer = request.form.get('answer', '').strip().lower()

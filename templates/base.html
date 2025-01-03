@@ -8,22 +8,22 @@
 </head>
 <body>
 
-<!--get your bloody mucky grubby fingers out of this inpection pane you cheating bathplug.-->
+<!-- get your bloody mucky grubby fingers out of this inpection pane you cheating bathplug. -->
 
     <nav class="sidenav">
+        <a href="https://f-mcp.github.io/"><i>H</i></a>
         {% for question in sidebar_questions %}
             <a href="{{ url_for('level', level=question) }}"><i>{{ question }}</i></a>
         {% endfor %}
+
 
     </nav>
     <main>
         {% block content %}{% endblock %}
     </main>
 
-    <script
-        src="{{ url_for('static', filename='tab_deny.js' )}}">
-    </script>
-
+    <script src="{{ url_for('static', filename='tab_deny.js' )}}"></script>
+    <script src="{{ url_for('static', filename='typed-text.js' )}}"></script>
 
 </body>
 </html>

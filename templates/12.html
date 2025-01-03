@@ -2,66 +2,21 @@
 
 {% block content %}
 
-<div id="puzzle-container">
-    <div class="puzzle-piece piece-1" draggable="true" data-pos="1"></div>
-    <div class="puzzle-piece piece-2" draggable="true" data-pos="2"></div>
-    <div class="puzzle-piece piece-3" draggable="true" data-pos="3"></div>
-    <div class="puzzle-piece piece-4" draggable="true" data-pos="4"></div>
-    <div class="puzzle-piece piece-5" draggable="true" data-pos="5"></div>
-    <div class="puzzle-piece piece-6" draggable="true" data-pos="6"></div>
-    <div class="puzzle-piece piece-7" draggable="true" data-pos="7"></div>
-    <div class="puzzle-piece piece-8" draggable="true" data-pos="8"></div>
-    <div class="puzzle-piece piece-9" draggable="true" data-pos="9"></div>
-</div>
-<div id="drop-container">
-    <div class="drop-zone" data-pos="1"></div>
-    <div class="drop-zone" data-pos="2"></div>
-    <div class="drop-zone" data-pos="3"></div>
-    <div class="drop-zone" data-pos="4"></div>
-    <div class="drop-zone" data-pos="5"></div>
-    <div class="drop-zone" data-pos="6"></div>
-    <div class="drop-zone" data-pos="7"></div>
-    <div class="drop-zone" data-pos="8"></div>
-    <div class="drop-zone" data-pos="9"></div>
-</div>
-<p id="completion-message" style="display: none;">Puzzle Complete! Well done!</p>
+<br><br><br>
+<p>okay, just this once I'll allow it.<br><br>
+    but don't get any ideas alright.<br><br>
+    f12.</p>
 
-<script>
-    const pieces = document.querySelectorAll('.puzzle-piece');
-    const dropZones = document.querySelectorAll('.drop-zone');
-    const completionMessage = document.getElementById('completion-message');
-    
-    let draggedPiece = null;
-    
-    pieces.forEach(piece => {
-        piece.addEventListener('dragstart', () => {
-            draggedPiece = piece;
-            setTimeout(() => piece.classList.add('dragging'), 0);
-        });
-    
-        piece.addEventListener('dragend', () => {
-            draggedPiece = null;
-            piece.classList.remove('dragging');
-        });
-    });
-    
-    dropZones.forEach(zone => {
-        zone.addEventListener('dragover', e => e.preventDefault());
-        zone.addEventListener('drop', e => {
-            if (!zone.hasChildNodes() && draggedPiece.dataset.pos === zone.dataset.pos) {
-                zone.appendChild(draggedPiece);
-                checkCompletion();
-            }
-        });
-    });
-    
-    function checkCompletion() {
-        const allFilled = Array.from(dropZones).every(zone => zone.hasChildNodes());
-        if (allFilled) {
-            completionMessage.style.display = 'block';
-        }
-    }
-</script>
+    <!-- ah, you're on level 12. okay this time it's okay. -->
+
+    <!-- but seriously, no funny business after this level. -->
+
+    <!-- your answer is 'turbo' -->
+
+    <form method="POST">
+        <input type="text" name="answer" placeholder="enter your answer." required>
+        <button type="submit">submit.</button>
+    </form>
 
 
 {% endblock %}

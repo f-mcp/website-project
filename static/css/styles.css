@@ -18,6 +18,12 @@ body {
     color:#000000;
 }
 
+#typed-text {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 24px;
+  white-space: pre; /* Keeps whitespace formatting */
+  color: #fff;
+}
 
  /* The sidebar menu */
  .sidenav {
@@ -92,9 +98,12 @@ form input, form button, button {
   }
 
 .nine {
-  line-height: 10px;
+  line-height: 12px;
   font-size: 20px;
-  font-family: courier;
+  font-family: "Courier", monospace;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  text-align: left;
 }
 
 .ten {

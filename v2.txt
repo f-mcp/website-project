@@ -1,9 +1,13 @@
 NEW MR X IDEAS
 
 I think this next one can be more of a puzzle solving one. Keep it linear (faster to make!) and just have simple but clever puzzles on a page by page basis.
-
+********************************************************
+********************************************************
+*******                  TO DO                  ********
+********************************************************
+********************************************************
 Also impliment:
-If a user hasn't completed a level and decides to type in the url for a future level, they get told off and redirected to the level they were on
+/If a user hasn't completed a level and decides to type in the url for a future level, they get told off and redirected to the level they were on
 
 Pages:
 
@@ -64,5 +68,69 @@ Turn on a light switch that momentarily lights up a room revealing an anwswer wr
     M,E,n,I,O,b,Z,D,H,K,r,S,X,C,A,B,W,d,
 
 ^ Same for rotate?
+
+
+*Cut q12 stuff:
+
+<div id="puzzle-container">
+    <div class="puzzle-piece piece-1" draggable="true" data-pos="1"></div>
+    <div class="puzzle-piece piece-2" draggable="true" data-pos="2"></div>
+    <div class="puzzle-piece piece-3" draggable="true" data-pos="3"></div>
+    <div class="puzzle-piece piece-4" draggable="true" data-pos="4"></div>
+    <div class="puzzle-piece piece-5" draggable="true" data-pos="5"></div>
+    <div class="puzzle-piece piece-6" draggable="true" data-pos="6"></div>
+    <div class="puzzle-piece piece-7" draggable="true" data-pos="7"></div>
+    <div class="puzzle-piece piece-8" draggable="true" data-pos="8"></div>
+    <div class="puzzle-piece piece-9" draggable="true" data-pos="9"></div>
+</div>
+<div id="drop-container">
+    <div class="drop-zone" data-pos="1"></div>
+    <div class="drop-zone" data-pos="2"></div>
+    <div class="drop-zone" data-pos="3"></div>
+    <div class="drop-zone" data-pos="4"></div>
+    <div class="drop-zone" data-pos="5"></div>
+    <div class="drop-zone" data-pos="6"></div>
+    <div class="drop-zone" data-pos="7"></div>
+    <div class="drop-zone" data-pos="8"></div>
+    <div class="drop-zone" data-pos="9"></div>
+</div>
+<p id="completion-message" style="display: none;">Puzzle Complete! Well done!</p>
+
+<script>
+    const pieces = document.querySelectorAll('.puzzle-piece');
+    const dropZones = document.querySelectorAll('.drop-zone');
+    const completionMessage = document.getElementById('completion-message');
+    
+    let draggedPiece = null;
+    
+    pieces.forEach(piece => {
+        piece.addEventListener('dragstart', () => {
+            draggedPiece = piece;
+            setTimeout(() => piece.classList.add('dragging'), 0);
+        });
+    
+        piece.addEventListener('dragend', () => {
+            draggedPiece = null;
+            piece.classList.remove('dragging');
+        });
+    });
+    
+    dropZones.forEach(zone => {
+        zone.addEventListener('dragover', e => e.preventDefault());
+        zone.addEventListener('drop', e => {
+            if (!zone.hasChildNodes() && draggedPiece.dataset.pos === zone.dataset.pos) {
+                zone.appendChild(draggedPiece);
+                checkCompletion();
+            }
+        });
+    });
+    
+    function checkCompletion() {
+        const allFilled = Array.from(dropZones).every(zone => zone.hasChildNodes());
+        if (allFilled) {
+            completionMessage.style.display = 'block';
+        }
+    }
+</script>*
 
 
