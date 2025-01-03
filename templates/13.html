@@ -152,9 +152,10 @@
             holdSpeed();
             drawSpeedometer();
 
-            // Trigger the event when speed reaches 88 mph
+            // Trigger the event and mark the level as complete
             if (speed * 0.2 >= 88 && !eventTriggered) {
                 eventTriggered = true; // Set the flag
+                document.getElementById('complete-level-form').submit(); // Submit the form to mark the level as complete
                 displayRedLines();
             }
 
@@ -210,4 +211,10 @@
             z-index: 2; /* Ensure it appears above the bars */
         }
     </style>
+
+<form id="complete-level-form" method="post" action="/13">
+    <input type="hidden" name="answer" value="">
+</form>
+
+
 {% endblock %}
