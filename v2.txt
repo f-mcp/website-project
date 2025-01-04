@@ -59,6 +59,9 @@ zoom out to reveal something (could have fun with this - zoom out of some guys b
 
 Turn on a light switch that momentarily lights up a room revealing an anwswer written on the wall before bulb pops
 
+The type line in the form box flashes a message in morse code
+
+
 /Timer that resets to zero whenever they do anything (count up so they don't know if/when it is going to do something)
 
 /Flipped page. Answer is made up of letters that can also be upside down to 

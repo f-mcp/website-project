@@ -9,13 +9,13 @@
 <body>
 
 <!-- get your bloody mucky grubby fingers out of this inpection pane you cheating bathplug. -->
-
+{% block nav %}
     <nav class="sidenav">
         <a href="https://f-mcp.github.io/"><i>H</i></a>
         {% for question in sidebar_questions %}
             <a href="{{ url_for('level', level=question) }}"><i>{{ question }}</i></a>
         {% endfor %}
-
+{% endblock %}
 
     </nav>
     <main>

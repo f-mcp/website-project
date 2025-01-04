@@ -30,11 +30,15 @@ document.addEventListener("keydown", (event) => {
   // Check if the userInput matches the Konami Code
   if (JSON.stringify(userInput) === JSON.stringify(konamiCode)) {
     window.location.href = "16";
+    document.getElementById('complete-level-form').submit(); // Submit the form to mark the level as complete
     // Add any additional functionality here
   }
 });
 
 </script>
 
+<form id="complete-level-form" method="post" action="/15">
+  <input type="hidden" name="answer" value="">
+</form>
 
 {% endblock %}

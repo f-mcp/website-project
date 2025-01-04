@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block nav %}
+
+<style>
+      .sidenav li {
+    padding: 4px 4px 4px 10px;
+    text-decoration: none;
+    font-family: arial;
+    font-size: 16px;
+    color: #2f2f2f;
+    display: block;
+    text-align: left;
+  }
+</style>
+
+
+<nav class="sidenav">
+    <a href="https://f-mcp.github.io/"><i>H</i></a>
+    <a href="/1"><i>1</i></a>
+    <li id="key-2"><i>2</i></li>
+    <a href="/3"><i>3</i></a>
+    <li id="key-4"><i>4</i></li>
+    <a href="/5"><i>5</i></a>
+    <a href="/6"><i>6</i></a>
+    <a href="/7"><i>7</i></a>
+    <a href="/8"><i>8</i></a>
+    <a href="/9"><i>9</i></a>
+    <a href="/10"><i>10</i></a>
+    <a href="/11"><i>11</i></a>
+    <a href="/12"><i>12</i></a>
+    <a href="/13"><i>13</i></a>
+    <a href="/14"><i>14</i></a>
+    <a href="/15"><i>15</i></a>
+    <a href="/16"><i>16</i></a>
+    <a href="/17"><i>17</i></a>
+    <a href="/18"><i>18</i></a>
+    <a href="/19"><i>19</i></a>
+    <a href="/20"><i>20</i></a>
+    <a href="/21"><i>21</i></a>
+
+
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<br><br><br><br>
+
+<p>what is. <br><br>the meaning of life.</p>
+<br><br>
+
+
+<form id="answer-form">
+    <input type="text" id="answer-input" placeholder="Type your answer" readonly />
+    <button type="submit">Submit</button>
+  </form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("answer-input");
+  const key4 = document.getElementById("key-4");
+  const key2 = document.getElementById("key-2");
+  
+  // To store the answer user is "typing"
+  let typedAnswer = "";
+
+  // Add event listeners for clicks on 4 and 2
+  key4.addEventListener("click", () => {
+    typedAnswer += "4";
+    updateInput();
+  });
+
+  key2.addEventListener("click", () => {
+    typedAnswer += "2";
+    updateInput();
+  });
+
+  function updateInput() {
+    // Limit to 2 characters and update input field
+    typedAnswer = typedAnswer.slice(0, 2);
+    input.value = typedAnswer;
+  }
+});
+
+</script>
+
+
+{% endblock %}

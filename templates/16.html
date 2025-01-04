@@ -47,6 +47,7 @@ function startTimer() {
     timer++;
     if (timer >= 365) {
         window.location.href = "17"; // Link to next level when the user waits x seconds
+        document.getElementById('complete-level-form').submit(); // Submit the form to mark the level as complete
     }
     updateTimerDisplay();
   }, 1000);
@@ -77,6 +78,12 @@ function initTimer() {
 document.addEventListener("DOMContentLoaded", initTimer);
 </script>
 
+<form id="complete-level-form" method="post" action="/16">
+  <input type="hidden" name="answer" value="">
+</form>
 
+<form method="POST" autocomplete="off">  <!--Temporary button so we can pass the level-->
+  <button type="submit">submit.</button>
+</form>
 
 {% endblock %}

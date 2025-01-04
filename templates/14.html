@@ -5,58 +5,157 @@ Mouse Maze - Level {{ level }}
 {% endblock %}
 
 {% block content %}
-    <div id="maze-container">
-        <div id="start">Start</div>
-        <div id="finish">Finish</div>
-        <div class="maze-wall"></div>
-        <div class="maze-wall"></div>
-        <div class="maze-wall"></div>
-        <div class="maze-wall"></div>
-        <!-- Add more walls to define your maze -->
-    </div>
-    <div id="status">Move your mouse to navigate from Start to Finish without touching the walls!</div>
+    <div id="maze-container"></div>
+    <div id="status">somtime it's impossible. just refresh.</div>
 
     <script>
         const mazeContainer = document.getElementById("maze-container");
-        const start = document.getElementById("start");
-        const finish = document.getElementById("finish");
         const status = document.getElementById("status");
-        const walls = document.querySelectorAll(".maze-wall");
-
+        const rows = 24; // Height of the maze
+        const cols = 50; // Width of the maze
+        
         let isInsideMaze = false;
-
-        // Function to restart the maze
-        function restartMaze() {
-            status.textContent = "Oops! You touched a wall. Back to Start!";
-            status.style.color = "red";
+    
+        // Generate a grid-based maze
+        function generateMaze() {
+            const grid = [];
+            for (let row = 0; row < rows; row++) {
+                const rowDiv = [];
+                for (let col = 0; col < cols; col++) {
+                    const cell = document.createElement("div");
+                    cell.classList.add("maze-cell");
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+    
+                    // Add walls to the top and left borders
+                    if (row === 0 || col === 0) {
+                        cell.classList.add("wall");
+                    }
+    
+                    mazeContainer.appendChild(cell);
+                    rowDiv.push(cell);
+                }
+                grid.push(rowDiv);
+            }
+            return grid;
+        }
+    
+        // Depth-First Search Maze Generation
+        function carveMaze(grid) {
+            const directions = [
+                { row: -1, col: 0 }, // Up
+                { row: 1, col: 0 },  // Down
+                { row: 0, col: -1 }, // Left
+                { row: 0, col: 1 }   // Right
+            ];
+            const stack = [];
+            const visited = new Set();
+    
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+    
+            function visitCell(row, col) {
+                const key = `${row},${col}`;
+                if (row <= 0 || col <= 0 || row >= rows - 1 || col >= cols - 1 || visited.has(key)) {
+                    return false;
+                }
+    
+                visited.add(key);
+                grid[row][col].classList.add("path");
+                stack.push({ row, col });
+    
+                shuffle(directions).forEach(({ row: dRow, col: dCol }) => {
+                    const nextRow = row + dRow * 2;
+                    const nextCol = col + dCol * 2;
+    
+                    if (nextRow > 0 && nextCol > 0 && nextRow < rows - 1 && nextCol < cols - 1) {
+                        if (!visited.has(`${nextRow},${nextCol}`)) {
+                            // Carve a path between the current cell and the next cell
+                            grid[row + dRow][col + dCol].classList.add("path");
+                            visitCell(nextRow, nextCol);
+                        }
+                    }
+                });
+    
+                return true;
+            }
+    
+            // Start carving from the top-left corner
+            visitCell(1, 1); // Start carving within the maze boundaries
+    
+            // Mark start and finish points
+            grid[1][1].classList.add("start");
+            grid[rows - 3][cols - 3].classList.add("finish"); // Force finish into penultimate row/col
+        }
+    
+        // Change the rightmost and bottom walls to black
+        function changeBordersToBlack(grid) {
+            // Change the rightmost column walls to black
+            for (let row = 0; row < rows; row++) {
+                const lastCell = grid[row][cols - 1];
+                lastCell.classList.add("black-wall");
+            }
+    
+            // Change the bottom row walls to black
+            for (let col = 0; col < cols; col++) {
+                const lastRowCell = grid[rows - 1][col];
+                lastRowCell.classList.add("black-wall");
+            }
+        }
+    
+        // Restart the maze if the user touches a wall
+        function restartMaze(message) {
+            status.textContent = message;
+            status.style.color = "white";
             isInsideMaze = false;
         }
-
-        // Check if the player reaches the Finish
-        finish.addEventListener("mouseenter", () => {
-            if (isInsideMaze) {
-                status.textContent = "Congratulations! You completed the maze!";
-                status.style.color = "green";
-                isInsideMaze = false;
-            }
-        });
-
-        // Detect when the mouse enters Start
-        start.addEventListener("mouseenter", () => {
-            status.textContent = "Navigate to Finish without touching the walls!";
-            status.style.color = "black";
-            isInsideMaze = true;
-        });
-
-        // Detect if the mouse touches any walls
-        walls.forEach((wall) => {
-            wall.addEventListener("mouseenter", () => {
+    
+        // Add mouse events for start, finish, and walls
+        function addEventListeners(grid) {
+            const startCell = document.querySelector(".start");
+            const finishCell = document.querySelector(".finish");
+            const walls = document.querySelectorAll(".maze-cell:not(.path)");
+    
+            startCell.addEventListener("mouseenter", () => {
+                status.textContent = "keep going.";
+                status.style.color = "white";
+                isInsideMaze = true;
+            });
+    
+            finishCell.addEventListener("mouseenter", () => {
                 if (isInsideMaze) {
-                    restartMaze();
+                    document.getElementById('complete-level-form').submit();
+                    status.textContent = "Congratulations! You completed the maze!";
+                    status.style.color = "black";
+
+                    isInsideMaze = false;
                 }
             });
-        });
+    
+            walls.forEach((wall) => {
+                wall.addEventListener("mouseenter", () => {
+                    if (isInsideMaze) {
+                        restartMaze("go back to the start idiot");
+                    }
+                });
+            });
+        }
+    
+        // Initialize the maze
+        const grid = generateMaze();
+        carveMaze(grid);
+        changeBordersToBlack(grid); // Change the rightmost and bottom walls to black
+        addEventListeners(grid);
     </script>
+    
+    <form id="complete-level-form" method="post" action="/14">
+        <input type="hidden" name="answer" value="">
+    </form>
 
     <style>
         body {
@@ -67,69 +166,49 @@ Mouse Maze - Level {{ level }}
         }
 
         #maze-container {
-            position: relative;
-            width: 1200px;
-            height: 500px;
-            margin: 50px auto;
+            display: grid;
+            grid-template-rows: repeat(24, 25px);
+            grid-template-columns: repeat(50, 25px);
+            gap: 0;
+            width: 1225px;
+            height: 575px;
+            margin: 10px auto;
             background-color: #000000;
-            border: 2px solid #fff;
-            overflow: hidden;
         }
 
-        #start,
-        #finish {
-            position: absolute;
-            width: 80px;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            background-color: rgb(93, 93, 93);
-            color: white;
-            border-radius: 8px;
-        }
-
-        #start {
-            top: 10px;
-            left: 10px;
-        }
-
-        #finish {
-            bottom: 10px;
-            right: 10px;
-        }
-
-        .maze-wall {
-            position: absolute;
+        .maze-cell {
+            width: 25px;
+            height: 25px;
             background-color: rgb(255, 255, 255);
-            width: 2px;
-            height: 100px;
-            border-radius: 4px;
+            box-sizing: border-box;
         }
 
-        /* Example wall placement */
-        .maze-wall:nth-child(3) {
-            top: 100px;
-            left: 50px;
-            height: 200px;
+        .wall {
+            background-color: #fff;
         }
 
-        .maze-wall:nth-child(4) {
-            top: 200px;
-            left: 150px;
-            width: 300px;
-            height: 4px;
+        .path {
+            background-color: #000;
         }
 
-        .maze-wall:nth-child(5) {
-            top: 300px;
-            left: 100px;
-            height: 150px;
+        .start {
+            background-color: green;
         }
+
+        .finish {
+            background-color: red;
+        }
+
+        .black-wall {
+    background-color: #000; /* Set the color of the "black" walls */
+}
+
 
         #status {
             text-align: center;
             font-size: 18px;
             margin-top: 20px;
+            font-family: times;
         }
     </style>
 {% endblock %}

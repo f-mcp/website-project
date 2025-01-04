@@ -23,8 +23,8 @@ answer_store = {1  : ["start" , 0],        # Intro         # 0: not answered. 1:
                 18 : ["dn!q" , 0],         # Upside down
                 19 : ["" , 0],             # Connect the dots
                 20 : ["" , 0],             # Mirrored curser
-                21 : ["red" , 0],
-                22 : ["red" , 0],
-                23 : ["red" , 0],
-                24 : ["red" , 0],
+                21 : ["42" , 0],           # Sidenav typing
+                22 : ["" , 0],
+                23 : ["" , 0],
+                24 : ["" , 0],
                 }
