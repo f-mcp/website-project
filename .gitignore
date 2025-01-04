@@ -1,5 +1,5 @@
 # Ignore app.py so we can keep it in debug locally
-app.py
+#app.py
 
 # Ignore obsolete files
 *.php
