@@ -6,7 +6,7 @@ Mouse Maze - Level {{ level }}
 
 {% block content %}
     <div id="maze-container"></div>
-    <div id="status">somtime it's impossible. just refresh.</div>
+    <div id="status">sometimes it's impossible. just refresh.</div>
 
     <script>
         const mazeContainer = document.getElementById("maze-container");
@@ -130,7 +130,7 @@ Mouse Maze - Level {{ level }}
             finishCell.addEventListener("mouseenter", () => {
                 if (isInsideMaze) {
                     document.getElementById('complete-level-form').submit();
-                    status.textContent = "Congratulations! You completed the maze!";
+                    status.textContent = "";
                     status.style.color = "black";
 
                     isInsideMaze = false;
@@ -140,7 +140,7 @@ Mouse Maze - Level {{ level }}
             walls.forEach((wall) => {
                 wall.addEventListener("mouseenter", () => {
                     if (isInsideMaze) {
-                        restartMaze("go back to the start idiot");
+                        restartMaze("go back to the start idiot.");
                     }
                 });
             });

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br><br><br><br><br><br>
+
+<header>congratulations. you've caught me up.</header>
+
+<br><br><br>stay tuned and there might be some more.<br><br><br>
+<!--
+<form method="POST" autocomplete="off">
+    <input type="text" name="answer" id="answer-input" placeholder="Enter your answer." required>
+    <button type="submit">Submit.</button>
+</form>
+
+<script>
+  // Morse code mapping (dot = short flash, dash = long flash)
+  const morseCode = {
+    "H": "....",
+    "E": ".",
+    "L": ".-..",
+    "O": "---",
+    "2": "..---",
+    "5": ".....",
+    "S": "..."
+  };
+
+  // The message to flash (you can modify this as needed)
+  const message = "SOS";
+
+  // Reference to the input element
+  const input = document.getElementById("answer-input");
+
+  // Function to flash the cursor based on Morse code
+  function flashCursor() {
+    let index = 0;
+    let morseMessage = "";
+    
+    // Convert the message to Morse code
+    for (let i = 0; i < message.length; i++) {
+      morseMessage += morseCode[message[i]] + " "; // Add a space between letters
+    }
+
+    // Function to flash the cursor based on the current Morse code symbol
+    function blinkCursor() {
+      if (index >= morseMessage.length) {
+        return; // Stop after the message is complete
+      }
+
+      const symbol = morseMessage[index];
+
+      if (symbol === ".") {
+        input.style.caretColor = "transparent"; // Hide the cursor (dot = short flash)
+        setTimeout(() => {
+          input.style.caretColor = "white"; // Show the cursor after dot
+        }, 300); // Short flash for dot (300ms)
+      } else if (symbol === "-") {
+        input.style.caretColor = "transparent"; // Hide the cursor (dash = long flash)
+        setTimeout(() => {
+          input.style.caretColor = "white"; // Show the cursor after dash
+        }, 900); // Long flash for dash (900ms)
+      }
+
+      index++;
+      setTimeout(blinkCursor, 1000); // Wait before showing the next symbol
+    }
+
+    blinkCursor();
+  }
+
+  // Start flashing when the input is focused
+  input.addEventListener("focus", () => {
+    flashCursor();
+  });
+</script>
+
+<style>
+  input {
+    border: 2px solid white;
+    padding-left: 5px;
+    font-size: 18px;
+    color: white;
+    background-color: black;
+    caret-color: transparent; /* Disable native cursor blinking */
+  }
+
+  input:focus {
+    outline: none;
+  }
+</style>
+-->
+{% endblock %}

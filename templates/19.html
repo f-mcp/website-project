@@ -4,102 +4,106 @@
 
 <style>
     /* Canvas container */
-#canvas-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
+    #canvas-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
 
-/* Dot styling */
-.dot {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-}
-
+    /* Dot styling */
+    .dot {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: transparent;
+        border: 2px solid #ffffff;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        color: #ffffff;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 4;
+    }
 </style>
 
 <div id="canvas-container">
     <canvas id="canvas"></canvas>
-  </div>
+</div>
 
-  <form method="POST">
+<form method="POST" autocomplete="off">
     <input type="text" name="answer" placeholder="enter your answer." required>
     <button type="submit" class="sect18">submit.</button>
 </form>
 
 <script>
     // Select the canvas and set its size
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth-30;
-canvas.height = window.innerHeight;
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth - 30;
+    canvas.height = window.innerHeight;
 
-// Store the last clicked dot position
-let lastClickedDot = null;
+    // Store the last clicked dot position
+    let lastClickedDot = null;
 
-// Predefined dot coordinates
-const dotCoordinates = [
-  { x: 50, y: 150 },
-  { x: 300, y: 200 },
-  { x: 500, y: 100 },       // Draw something to give an answer
-  { x: 700, y: 300 },
-  { x: 400, y: 400 },
-  { x: 100, y: 150 },
-  { x: 300, y: 200 },
-  { x: 500, y: 100 },
-  { x: 700, y: 300 },
-  { x: 900, y: 900 },
-];
+    // Predefined dot coordinates for a house shape
+    const dotCoordinates = [
+        { x: 200, y: 400, number: 1 },  // Bottom-left of the house
+        { x: 400, y: 400, number: 6 },  // Bottom-right of the house
+        { x: 400, y: 200, number: 7 },  // Top-right of the house
+        { x: 200, y: 200, number: 9 },  // Top-left of the house
+        { x: 300, y: 100, number: 8 },  // Roof peak
+        { x: 250, y: 300, number: 3 },  // Door top-left
+        { x: 350, y: 300, number: 4 },  // Door top-right
+        { x: 250, y: 400, number: 2 },  // Door bottom-left
+        { x: 350, y: 400, number: 5 }   // Door bottom-right
+    ];
 
-// Function to create dots at specified coordinates
-function createDots() {
-  dotCoordinates.forEach(({ x, y }) => {
-    const dot = document.createElement("div");
-    dot.classList.add("dot");
-    dot.style.left = `${x}px`;
-    dot.style.top = `${y}px`;
+    // Function to create dots at specified coordinates
+    function createDots() {
+        dotCoordinates.forEach(({ x, y, number }) => {
+            const dot = document.createElement("div");
+            dot.classList.add("dot");
+            dot.style.left = `${x}px`;
+            dot.style.top = `${y}px`;
+            dot.textContent = number;
 
-    // Add click event listener to the dot
-    dot.addEventListener("click", () => handleDotClick(x, y));
+            // Add click event listener to the dot
+            dot.addEventListener("click", () => handleDotClick(x, y));
 
-    document.body.appendChild(dot);
-  });
-}
+            document.body.appendChild(dot);
+        });
+    }
 
-// Function to handle dot clicks and draw lines
-function handleDotClick(x, y) {
-  if (lastClickedDot) {
-    // Draw a line between the last clicked dot and the current one
-    drawLine(lastClickedDot.x, lastClickedDot.y, x, y);
-  }
+    // Function to handle dot clicks and draw lines
+    function handleDotClick(x, y) {
+        if (lastClickedDot) {
+            // Draw a line between the last clicked dot and the current one
+            drawLine(lastClickedDot.x, lastClickedDot.y, x, y);
+        }
 
-  // Update the last clicked dot
-  lastClickedDot = { x, y };
-}
+        // Update the last clicked dot
+        lastClickedDot = { x, y };
+    }
 
-// Function to draw a line on the canvas
-function drawLine(x1, y1, x2, y2) {
-  ctx.beginPath();
-  ctx.moveTo(x1, y1);
-  ctx.lineTo(x2, y2);
-  ctx.strokeStyle = "#fff";
-  ctx.lineWidth = 2;
-  ctx.stroke();
-}
+    // Function to draw a line on the canvas
+    function drawLine(x1, y1, x2, y2) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    }
 
-// Initialize the dots
-createDots();
-
+    // Initialize the dots
+    createDots();
 </script>
 
 
-<form method="POST" autocomplete="off">  <!--Temporary button so we can pass the level-->
-  <button type="submit">submit.</button>
-</form>
 
 {% endblock %}

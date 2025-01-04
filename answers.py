@@ -21,9 +21,9 @@ answer_store = {1  : ["start" , 0],        # Intro         # 0: not answered. 1:
                 16 : ["" , 0],             # Long wait timer
                 17 : ["365" , 0],          # Timer end input
                 18 : ["dn!q" , 0],         # Upside down
-                19 : ["" , 0],             # Connect the dots
-                20 : ["" , 0],             # Mirrored curser
-                21 : ["42" , 0],           # Sidenav typing
+                19 : ["house" , 0],        # Connect the dots
+                20 : ["42" , 0],             # Mirrored curser
+                21 : ["" , 0],           # Sidenav typing
                 22 : ["" , 0],
                 23 : ["" , 0],
                 24 : ["" , 0],
